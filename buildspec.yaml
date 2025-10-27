@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - yum install -y aws-cli zip
+  build:
+    commands:
+      - echo Building the application...
+      - chmod +x scripts/*.sh
+      - mkdir output
+      - cp -r index.html appspec.yml scripts/ output/
+      - cd output
+      - zip -r ../deployment-package.zip .
+  post_build:
+    commands:
+      - echo Build completed successfully.
+
+artifacts:
+  files:
+    - deployment-package.zip
